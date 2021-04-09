@@ -1,0 +1,19 @@
+# general
+*~
+*.log
+*.gz
+tmp
+dump
+.DS_Store
+.history
+dump.rdb
+__pycache__
+spiders/__pycache__
+
+# Intellij
+**/.idea/
+*.iml
+*.csv
+*.xml
+*.html
+*.pyc
