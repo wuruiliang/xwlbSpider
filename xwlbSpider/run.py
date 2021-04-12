@@ -1,6 +1,6 @@
 from scrapy import cmdline
 
 name = 'xwlbText'
-date = '2021年04月04日'
-cmd = 'scrapy crawl {0} -a date={1}'.format(name, date)
+last_date = '2021年3月28日'
+cmd = 'scrapy crawl {0} -a last_date={1}'.format(name, last_date)
 cmdline.execute(cmd.split())

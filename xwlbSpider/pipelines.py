@@ -10,16 +10,13 @@ import pymysql
 import time
 import base64
 from datetime import datetime
+from utils import open_connection
+from utils import close_connection
 
 from pymysql import MySQLError
 
 
 class XwlbspiderPipeline:
-    mysql_host = '127.0.0.1'
-    mysql_port = 3306
-    mysql_user = 'root'
-    mysql_password = ''
-    mysql_db = 'xwlb'
     db = None
     def process_item(self, item, spider):
         if item['content'] is None or item['summary'] is None or item['title'] is None or item['url'] is None:
@@ -43,13 +40,7 @@ class XwlbspiderPipeline:
             pass
 
     def open_spider(self, spider):
-        self.db = pymysql.connect(
-            host=self.mysql_host,
-            port=self.mysql_port,
-            user=self.mysql_user,
-            passwd=self.mysql_password,
-            db=self.mysql_db,
-            charset='utf8')
+        self.db = open_connection()
 
     def close_spider(self, spider):
-        self.db.close()
+        close_connection(self.db)
