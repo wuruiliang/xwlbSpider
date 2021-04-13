@@ -6,12 +6,11 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-import pymysql
-import time
 import base64
-from datetime import datetime
 from utils import open_connection
 from utils import close_connection
+from utils import get_now_millisecond
+from utils import get_millisecond
 
 from pymysql import MySQLError
 
@@ -23,8 +22,8 @@ class XwlbspiderPipeline:
             print('content is empty. date=%s, url=%s' % (item['date'], item['url']))
             return
         cursor = self.db.cursor()
-        now = int(datetime.now().timestamp())
-        date = int(time.mktime(time.strptime(item['date'], spider.date_format)))
+        now = get_now_millisecond()
+        date = get_millisecond(item['date'], spider.date_format)
         sql = "insert into xwlb_text(title,date,summary,content,url,time_created,time_updated) \
         values ('%s',%s,'%s','%s','%s',%s,%s)" \
         % (item['title'].strip(), date, str(base64.b64encode(item['summary'].encode('utf-8')), 'utf-8'), \

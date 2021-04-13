@@ -1,7 +1,7 @@
 import scrapy
-import time
 from ..utils import open_connection
 from ..utils import close_connection
+from ..utils import get_millisecond
 
 from xwlbSpider.items import XwlbTextItem
 
@@ -25,13 +25,12 @@ class xwlbTextSpider(scrapy.Spider):
             header = each.xpath('header/h1[@class="entry-title"]/a/text()').extract_first().strip()
             if header is not None:
                 date = header.replace('新闻联播文字版', '')
-                exists = self.get_exist_data(int(time.mktime(time.strptime(date, self.date_format))))
+                exists = self.get_exist_data(get_millisecond(date, self.date_format))
                 last_date = date
                 if exists is None or not exists:
                     open_url = each.xpath('header/h1[@class="entry-title"]/a/@href').extract_first()
                     yield scrapy.Request(url=open_url, callback=self.parse_content)
-        if self.last_date is not None and int(time.mktime(time.strptime(last_date, self.date_format))) > int(
-                time.mktime(time.strptime(self.last_date, self.date_format))):
+        if self.last_date is not None and get_millisecond(last_date, self.date_format) > get_millisecond(self.last_date, self.date_format):
             next_url = response.xpath(
                 '//*/nav/div[@class="nav-links"]/a[@class="next page-numbers"]/@href').extract_first()
             if next_url is not None:
