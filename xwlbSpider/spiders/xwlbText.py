@@ -2,6 +2,7 @@ import scrapy
 from ..utils import open_connection
 from ..utils import close_connection
 from ..utils import get_millisecond
+from ..utils import filter_tags
 
 from xwlbSpider.items import XwlbTextItem
 
@@ -43,9 +44,9 @@ class xwlbTextSpider(scrapy.Spider):
         summary = ''
         content = ''
         for each in summary_list:
-            summary += each.extract() + '\n'
+            summary += filter_tags(each.extract()) + '\n'
         for each in content_list:
-            content += each.extract() + '\n'
+            content += filter_tags(each.extract()) + '\n'
         item = XwlbTextItem()
         item['title'] = header.strip() if header is not None else None
         item['url'] = response.request.url
