@@ -25,7 +25,7 @@ class XwlbspiderPipeline:
         cursor = self.db.cursor()
         now = int(datetime.now().timestamp())
         date = int(time.mktime(time.strptime(item['date'], spider.date_format)))
-        sql = "insert into xwlbText(title,date,summary,content,url,time_created,time_updated) \
+        sql = "insert into xwlb_text(title,date,summary,content,url,time_created,time_updated) \
         values ('%s',%s,'%s','%s','%s',%s,%s)" \
         % (item['title'].strip(), date, str(base64.b64encode(item['summary'].encode('utf-8')), 'utf-8'), \
            str(base64.b64encode(item['content'].encode('utf-8')), 'utf-8'), \

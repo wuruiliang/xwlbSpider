@@ -58,7 +58,7 @@ class xwlbTextSpider(scrapy.Spider):
     def get_exist_data(self, date):
         db = open_connection()
         cursor = db.cursor()
-        sql = 'select * from xwlbText where date=%s' % date
+        sql = 'select * from xwlb_text where date=%s' % date
         try:
             cursor.execute(sql)
             results = cursor.fetchall()
