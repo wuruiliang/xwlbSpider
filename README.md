@@ -2,7 +2,11 @@
 
 ### Install:
 1. install python and scrapy
-2. create table:
+2. create database:
+   ```sql
+   CREATE DATABASE xwlb
+   ```
+3. create table:
 ```sql
 CREATE TABLE `xwlb_text`
 (
