@@ -21,7 +21,7 @@ class xwlbTextSpider(scrapy.Spider):
         self.last_date = last_date
 
     def parse(self, response, **kwargs):
-        last_date = None
+        last_date = self.last_date
         for each in response.xpath('//*/article'):
             header = each.xpath('header/h1[@class="entry-title"]/a/text()').extract_first().strip()
             if header is not None:
@@ -31,7 +31,7 @@ class xwlbTextSpider(scrapy.Spider):
                 if exists is None or not exists:
                     open_url = each.xpath('header/h1[@class="entry-title"]/a/@href').extract_first()
                     yield scrapy.Request(url=open_url, callback=self.parse_content)
-        if self.last_date is not None and get_millisecond(last_date, self.date_format) > get_millisecond(self.last_date, self.date_format):
+        if self.last_date is not None and get_millisecond(last_date, self.date_format) + 1 > get_millisecond(self.last_date, self.date_format):
             next_url = response.xpath(
                 '//*/nav/div[@class="nav-links"]/a[@class="next page-numbers"]/@href').extract_first()
             if next_url is not None:
