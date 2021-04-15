@@ -1,7 +1,7 @@
 ## 新闻联播文字内容爬取
 
 ### Install:
-1. install python and scrapy
+1. install mysql、python and scrapy
 2. create database:
    ```sql
    CREATE DATABASE xwlb
